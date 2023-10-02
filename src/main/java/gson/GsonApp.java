@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class GsonApp implements Runnable {
-    Gson gson;
+    private final Gson gson;
 
     public GsonApp() {
         gson = new GsonBuilder().create();
