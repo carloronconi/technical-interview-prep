@@ -18,9 +18,8 @@ public class App
         String input = scanner.next();
         System.out.println("Hello, " + input + "!");
 
-        HttpRequest requestGet = null;
         try {
-            requestGet = HttpRequest.newBuilder()
+            HttpRequest requestGet = HttpRequest.newBuilder()
                     .uri(new URI("https://postman-echo.com/get"))
                     .header("key1", "value1")
                     .header("key2", "value2")
@@ -30,14 +29,16 @@ public class App
             HttpRequest requestPost = HttpRequest.newBuilder()
                     .uri(new URI("https://postman-echo.com/post"))
                     .headers("Content-Type", "text/plain;charset=UTF-8")
-                    .POST(HttpRequest.BodyPublishers.ofString("Sample request body"))
+                    .POST(HttpRequest.BodyPublishers.ofString("Sample request body")) // use ofString to send Json!
                     .build();
 
             HttpClient client = HttpClient.newBuilder().build();
 
-            HttpResponse<String> response = client.send(requestGet, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responseGet = client.send(requestGet, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responsePost = client.send(requestPost, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println(response.body());
+            System.out.println("Response body for GET request:\n" + responseGet.body() +
+                    "\nResponse body for POST request:\n" + responsePost.body());
 
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
