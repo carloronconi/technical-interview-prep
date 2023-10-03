@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+@NoArgsConstructor // only used for testing
 public class GsonApp implements Runnable {
     private final Gson gson = new GsonBuilder().create();
     private ArrayList<User> users;
@@ -61,8 +61,9 @@ public class GsonApp implements Runnable {
 
     public static void main(String[] args) {
         List<User> users = new ArrayList<>();
-        users.add(new User(1, "Bob"));
-        GsonApp app = new GsonApp(users); // TODO: inject with Guice
+        users.add(new User(1, "Alice"));
+        users.add(new User(2, "Bob"));
+        GsonApp app = new GsonApp(users);
         app.run();
     }
 }

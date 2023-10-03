@@ -15,6 +15,6 @@ public class User {
 
     @Override
     public String toString() {
-        return id + " " + name + " " + todos;
+        return "\n" + id + " " + name + " " + todos;
     }
 }
