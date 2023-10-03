@@ -37,3 +37,6 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
+/.attach_pid89547
+/log.txt
+/log.txt.lck
