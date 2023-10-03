@@ -2,11 +2,13 @@ package gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class GsonApp implements Runnable {
     private final Gson gson;
@@ -25,6 +27,11 @@ public class GsonApp implements Runnable {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
+    }
+
+    public List<Todo> syncGson() throws Exception {
+        String body = sendRequest();
+        return gson.fromJson(body, new TypeToken<List<Todo>>(){}.getType());
     }
 
     @Override
