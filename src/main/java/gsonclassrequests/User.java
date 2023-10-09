@@ -1,4 +1,4 @@
-package gsonrequests;
+package gsonclassrequests;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
