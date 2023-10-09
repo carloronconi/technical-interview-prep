@@ -23,11 +23,11 @@ public class Orchestrator implements Runnable {
         Future<String> futureBob = executor.submit(bob);
 
         try {
-            System.out.println(futureAlice.get() + "\n" + futureBob.get());
+            System.out.println(futureAlice.get() + "\n" + futureBob.get()); // .get() is blocking
+            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) executor.shutdown(); // indicated way to wait for threads to finish
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
-        executor.shutdown();
 
         System.out.println("Orchestrator finished running!");
     }
