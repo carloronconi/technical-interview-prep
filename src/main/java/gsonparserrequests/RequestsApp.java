@@ -38,7 +38,7 @@ public class RequestsApp {
                 "\nResponse body for POST request:\n" + responsePost.body());
 
         Gson gson = new Gson();
-        Response response = gson.fromJson(responseGet.body(), Response.class);
+        Response response = gson.fromJson(responseGet.body(), Response.class); // TODO https://stackoverflow.com/questions/16595493/gson-parsing-without-a-lot-of-classes
         System.out.println(response);
     }
 }
