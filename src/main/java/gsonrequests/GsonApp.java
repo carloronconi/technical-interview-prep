@@ -46,7 +46,9 @@ public class GsonApp implements Runnable {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        String body = response.body();
+        // System.out.println("Request answered with body response:\n" + body);
+        return body;
     }
 
     /**
