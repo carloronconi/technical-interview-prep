@@ -6,7 +6,7 @@ public class Orchestrator implements Runnable {
 
     @Override
     public void run() {
-        StringsApp alice = new StringsApp("Alice");
+        StringsApp alice = new StringsApp("aaaaaace");
         StringsApp bob = new StringsApp("Bob");
 
         /*
