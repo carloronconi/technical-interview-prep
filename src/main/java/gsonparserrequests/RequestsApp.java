@@ -1,6 +1,8 @@
 package gsonparserrequests;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -37,8 +39,29 @@ public class RequestsApp {
         System.out.println("Response body for GET request:\n" + responseGet.body() +
                 "\nResponse body for POST request:\n" + responsePost.body());
 
-        Gson gson = new Gson();
-        Response response = gson.fromJson(responseGet.body(), Response.class); // TODO https://stackoverflow.com/questions/16595493/gson-parsing-without-a-lot-of-classes
-        System.out.println(response);
+        //Response response = gson.fromJson(responseGet.body(), Response.class); // TODO https://stackoverflow.com/questions/16595493/gson-parsing-without-a-lot-of-classes
+        //System.out.println(response);
+        // This would use classes to model response, takes long to get simple value out of Json
+
+        /*
+        When you want to simply extract field without modeling with classes, use JsonParser with body like this:
+        {
+          "args": {},
+          "headers": {
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "postman-echo.com",
+            "x-amzn-trace-id": "Root=1-6523f4b9-2b93bd2712ce07a37bdd5815",
+            "key1": "value1",
+            "key2": "value2",
+            "user-agent": "Java-http-client/21"
+          },
+          "url": "https://postman-echo.com/get"
+        }
+         */
+        JsonObject rootObject = JsonParser.parseString(responseGet.body()).getAsJsonObject();
+        JsonObject headersObject = rootObject.get("headers").getAsJsonObject();
+        String userAgent = headersObject.get("user-agent").getAsString();
+        System.out.println("Extracted user agent info from GET response: " + userAgent);
     }
 }
