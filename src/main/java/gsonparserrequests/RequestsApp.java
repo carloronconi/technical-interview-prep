@@ -39,11 +39,12 @@ public class RequestsApp {
         System.out.println("Response body for GET request:\n" + responseGet.body() +
                 "\nResponse body for POST request:\n" + responsePost.body());
 
-        //Response response = gson.fromJson(responseGet.body(), Response.class); // TODO https://stackoverflow.com/questions/16595493/gson-parsing-without-a-lot-of-classes
-        //System.out.println(response);
-        // This would use classes to model response, takes long to get simple value out of Json
-
         /*
+        Instead of using classes to model response, which would require to model sub-classes:
+        Response response = gson.fromJson(responseGet.body(), Response.class);
+        System.out.println(response);
+
+        https://stackoverflow.com/questions/16595493/gson-parsing-without-a-lot-of-classes
         When you want to simply extract field without modeling with classes, use JsonParser with body like this:
         {
           "args": {},
