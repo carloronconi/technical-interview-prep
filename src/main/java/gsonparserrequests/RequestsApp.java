@@ -64,5 +64,40 @@ public class RequestsApp {
         JsonObject headersObject = rootObject.get("headers").getAsJsonObject();
         String userAgent = headersObject.get("user-agent").getAsString();
         System.out.println("Extracted user agent info from GET response: " + userAgent);
+
+        // directly accessing field we want trough method chaining for more clarity
+        String userAgentPost = JsonParser.parseString(responsePost.body())
+                .getAsJsonObject()
+                .getAsJsonObject("headers")
+                .get("user-agent")
+                .getAsString();
+        System.out.println("Extracted user agent info from POST response: " + userAgentPost);
+
+        /*
+        Example with more nesting:
+
+        {
+          "result": {
+            "geometry": {
+              "location": {
+                "lat": 45.80355369999999,
+                "lng": 15.9363229
+              }
+            }
+          },
+          "status": "OK"
+        }
+
+        JsonObject rootObj = JsonParser.parseString(json).getAsJsonObject();
+        JsonObject locationObj = rootObj
+            .getAsJsonObject("result")
+            .getAsJsonObject("geometry")
+            .getAsJsonObject("location");
+
+        String status = rootObj.get("status").getAsString();
+        String latitude = locationObj.get("lat").getAsString();
+        String longitude = locationObj.get("lng").getAsString();
+
+         */
     }
 }
