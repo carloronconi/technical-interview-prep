@@ -17,7 +17,7 @@ public class StringsApp implements Callable<String> {
     }
 
     private void regexMatchName() {
-        String regex = "^(aa)*ce$"; //^ and $ important because start and end of word, otherwise find will be true even if
+        String regex = "^(aa|bo)*XX$"; //^ and $ important because start and end of word, otherwise find will be true even if
         // pattern found in the middle of the word
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         String match = pattern.matcher(name).find()? "Pattern found match:" : "Didn't match:";
