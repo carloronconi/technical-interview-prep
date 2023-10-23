@@ -1,0 +1,2 @@
+# gsonparserrequests
+This example models the simplest HTTP interaction possible using Gson: parsing the body of the response with `JsonParser.parseString(responsePost.body()).getAsJsonObject().get("user-agent").getAsString();` to access a single field without having to model the whole response in a separate class.

@@ -1,0 +1,2 @@
+# stringsthreadpool
+This example models simple multithreading using `ExecutorService` and `Future`s to launch two different instances of `StringsApp`. The app executes regex pattern matching on a given string.

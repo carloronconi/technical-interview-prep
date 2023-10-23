@@ -1,0 +1,2 @@
+# gsonclassrequests
+This example models an app interacting with an HTTP server using Gson, storing the retrieved data in a predefined object modeled by Todo, passed to Gson with `new TypeToken<List<Todo>>(){}.getType()`
