@@ -1,5 +1,8 @@
 package shopopeninghours;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OpeningHours implements Runnable {
 
     private String[] createLog(String customersLog) {
@@ -45,18 +48,34 @@ public class OpeningHours implements Runnable {
      * Question 3/3: consider a different log format for multiple days. Some logs can be badly written and there are BEGIN and END
      * labels, sometimes somebody forgets to write one of the labels, you should find a way to isolate the logs for the correct days only to
      * then compute the best open hours for each of them.
-     * Log example: BEGIN Y N Y BEGIN Y N Y Y END Y N BEGIN Y END N Y END <- here you should only keep valid days BEGIN Y N Y Y END & BEGIN Y END
+     * Log example: BEGIN Y N Y BEGIN Y N Y Y END Y N BEGIN Y END N Y END <- here you should only keep valid days BEGIN Y N Y Y END & BEGIN Y END -> "Y N Y Y" & "Y"
      */
     private void computeBestOpenHoursMultipleDays(String log) {
-
+        List<String> validLogs = new ArrayList<>();
+        String[] strings = log.split("BEGIN");
+        String[] cleanStrings = new String[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            cleanStrings[i] = strings[i].trim();
+        }
+        for (String s : cleanStrings) {
+            if (!s.contains("END")) continue;
+            validLogs.add(s.split("END")[0]); // only valid strings contain an END (substring before that)
+        }
+        for (String l : validLogs) {
+            String trimmedLog = l.trim();
+            System.out.printf("For the valid log %s the best open hours are %d%n", trimmedLog, computeBestOpenHours(trimmedLog));
+        }
     }
 
     @Override
     public void run() {
         String customersLog = "N N N Y";
         int openHours = 4;
+        String multiDayLog = "BEGIN Y N Y BEGIN Y N Y Y END Y N BEGIN Y END N Y END";
         System.out.printf("The penalty for log %s open for %d hours is %d%n", customersLog, openHours, computePenalty(customersLog, openHours));
-        System.out.printf("The best possible open hours for log %s is %d", customersLog, computeBestOpenHours(customersLog));
+        System.out.printf("The best possible open hours for log %s is %d%n", customersLog, computeBestOpenHours(customersLog));
+        System.out.printf("Computing the best open hours for the multi-day log %s%n", multiDayLog);
+        computeBestOpenHoursMultipleDays(multiDayLog);
     }
 
     public static void main(String[] args) {
