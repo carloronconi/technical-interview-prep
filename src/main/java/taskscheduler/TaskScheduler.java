@@ -1,5 +1,6 @@
 package taskscheduler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,6 @@ public class TaskScheduler {
      * @return list of schedules for each task ID, ordered as the input schedules
      */
     public List<String> schedule() {
-
+        return new ArrayList<>();
     }
 }
