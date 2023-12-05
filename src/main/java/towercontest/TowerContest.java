@@ -1,7 +1,7 @@
 package towercontest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * You have built some matchstick towers. A jury will judge the towers, and you know their grade is highly correlated
@@ -11,7 +11,35 @@ import java.util.List;
  * and have to complete the class TowerContest. The main method of TowerContest is provided.
  */
 public class TowerContest {
+    private final List<TowerInfo> myTowers;
+    private final List<TowerDescription> currentTowers = new ArrayList<>();
     public TowerContest(List<TowerDescription> yourTowers, List<TowerSchedule> yourSchedules) {
+        myTowers = new ArrayList<>();
+
+        // I'm not sure the problem stated that for each of your towers you get a schedule in the same order, so just
+        // fill the eventually unscheduled towers with invalid times -1
+        Map<String, TowerSchedule> scheduleMap = new HashMap<>();
+        for (TowerSchedule s : yourSchedules) {
+            scheduleMap.put(s.name(), s);
+        }
+
+        for (TowerDescription d : yourTowers) {
+            TowerSchedule schedule = scheduleMap.getOrDefault(d.name(), new TowerSchedule(d.name(), -1, -1));
+            TowerInfo info = new TowerInfo(d.name(), d.height(), schedule.enterTime(), schedule.exitTime(), false);
+            myTowers.add(info);
+        }
+    }
+
+    private Optional<TowerInfo> findAmongMyOutArenaTowers(int time, int height) {
+        return myTowers.stream()
+                .filter(t -> !t.inArena() && t.enterTime() == time && t.height() == height)
+                .findFirst();
+    }
+
+    private Optional<TowerInfo> findAmongMyInArenaTowers(int time, int height) {
+        return myTowers.stream()
+                .filter(t -> t.inArena() && t.exitTime() == time && t.height() == height)
+                .findFirst();
     }
 
     /**
@@ -19,12 +47,36 @@ public class TowerContest {
      * (an integer) and the height of the tower, without its name.
      */
     public void towerEntered(int time, int height) {
+        findAmongMyOutArenaTowers(time, height).ifPresentOrElse(
+                info -> {
+                    currentTowers.add(new TowerDescription(info.name(), info.height()));
+                    myTowers.remove(info);
+                    myTowers.add(new TowerInfo(info.name(), info.height(), info.enterTime(), info.exitTime(), true));
+                },
+                () -> currentTowers.add(new TowerDescription("", height))
+        );
     }
 
     public void towerExited(int time, int height) {
+        findAmongMyInArenaTowers(time, height).ifPresentOrElse(
+                info -> {
+                    currentTowers.removeIf(d -> d.name().equals(info.name()));
+                    myTowers.remove(info);
+                    myTowers.add(new TowerInfo(info.name(), info.height(), info.enterTime(), info.exitTime(), false));
+                },
+                () -> currentTowers.removeIf(d -> d.name().equals("") && d.height() == height)
+        );
     }
 
     public List<String> tallestCurrentTowersOwned() {
-        return new ArrayList<>();
+        int maxHeight = currentTowers.stream()
+                .map(TowerDescription::height)
+                .max(Integer::compareTo)
+                .orElse(-1);
+
+        return currentTowers.stream()
+                .filter(d -> !d.name().isEmpty() && d.height() == maxHeight)
+                .map(TowerDescription::name)
+                .collect(Collectors.toList());
     }
 }
