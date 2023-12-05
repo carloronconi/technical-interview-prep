@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
  * with the height of the towers. Towers have unique names. Towers enter and exit the judging arena at some schedules
  * (always assumed correct). You want to estimate your chances of victory by returning, among the tallest towers currently in
  * the arena, only those that you own. You are given the classes TowerDescription, TowerSchedule and the below signatures
- * and have to complete the class TowerContest. The main method of TowerContest is provided.
+ * and have to complete the class TowerContest. The tests are provided (and are very few so try to cover corner cases even
+ * if not covered by tests)
  */
 public class TowerContest {
     private final List<TowerInfo> myTowers;
