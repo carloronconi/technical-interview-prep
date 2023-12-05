@@ -1,2 +1,2 @@
 # Technical interview prep
-The packages in the [java directory](https://github.com/carloronconi/technical-interview-prep/tree/master/src/main/java) contain useful examples for technical interviews centered around string manipulation, HTTP requests and Json parsing. Each contains a `README.md` file explaining what the example does.
+Collection of [useful examples](./src/main/java/examples) and [actual interview questions](./src/main/java/interviews) I encountered. Each package is a standalone example/question documented with either a `README.md` or javadoc. Each example/question can be run either by itself or by running its tests.
