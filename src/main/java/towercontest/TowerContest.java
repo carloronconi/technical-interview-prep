@@ -64,7 +64,7 @@ public class TowerContest {
                     myTowers.remove(info);
                     myTowers.add(new TowerInfo(info.name(), info.height(), info.enterTime(), info.exitTime(), false));
                 },
-                () -> currentTowers.removeIf(d -> d.name().equals("") && d.height() == height)
+                () -> currentTowers.removeIf(d -> d.name().isEmpty() && d.height() == height)
         );
     }
 
