@@ -39,13 +39,15 @@ public class TaskScheduler {
     }
 
     private boolean isCircularDep(int id) {
-        if (tasks.get(id).getDependencies().isEmpty()) return false;
+        System.out.println("Testing if " + id + " has circular deps");
+
+        if (tasks.get(id - 1).getDependencies().isEmpty()) return false;
 
         // if any of its dependencies has a circular dep it also has circular dep, otherwise it doesn't
-        return tasks.get(id).getDependencies().stream()
+        return tasks.get(id - 1).getDependencies().stream()
                 .map(this::isCircularDep)
                 .filter(b -> b)
-                .findFirst()
+                .findAny()
                 .orElse(false);
     }
 
@@ -67,8 +69,8 @@ public class TaskScheduler {
             int depStart = t.getDependencies().stream().map(id -> tasks.get(id - 1).getStart()).max(Integer::compareTo).get();
             int depEnd = t.getDependencies().stream().map(id -> tasks.get(id - 1).getEnd()).min(Integer::compareTo).get();
 
-            int start = Math.max(depStart, t.getStart());
-            int end = Math.min(depEnd, t.getEnd());
+            int start = Math.max(depStart + 1, t.getStart());
+            int end = Math.min(depEnd - 1, t.getEnd());
 
             if (end <= start) {
                 result.add("IMPOSSIBLE");
