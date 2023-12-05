@@ -2,6 +2,7 @@ package taskscheduler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implement a task scheduler, being given a list of tasks with their optimal start/end times (integers).
@@ -17,12 +18,35 @@ import java.util.List;
  * You are only given this class's signatures and TaskSchedule, TaskDependency classes, and have to complete this class.
  */
 public class TaskScheduler {
-
+    private final List<Task> tasks;
     /**
      * @param schedules list of schedules where the task ID is the index + 1
      * @param dependencies list of dependencies between IDs
      */
     public TaskScheduler(List<TaskSchedule> schedules, List<TaskDependency> dependencies) {
+        tasks = new ArrayList<>();
+
+        // careful: IDs start from 1, while indexes start from 0, so to get task with ID x from tasks do tasks.get(x - 1)
+        for (int i = 0; i < schedules.size(); i++) {
+            TaskSchedule schedule = schedules.get(i);
+            int currId = i + 1;
+            tasks.add(new Task(currId, schedule.start(), schedule.end(),
+                    dependencies
+                            .stream().filter(d -> d.taskId() == currId)
+                            .map(TaskDependency::dependsOn)
+                            .collect(Collectors.toList())));
+        }
+    }
+
+    private boolean isCircularDep(int id) {
+        if (tasks.get(id).getDependencies().isEmpty()) return false;
+
+        // if any of its dependencies has a circular dep it also has circular dep, otherwise it doesn't
+        return tasks.get(id).getDependencies().stream()
+                .map(this::isCircularDep)
+                .filter(b -> b)
+                .findFirst()
+                .orElse(false);
     }
 
     /**
@@ -30,6 +54,36 @@ public class TaskScheduler {
      * @return list of schedules for each task ID, ordered as the input schedules
      */
     public List<String> schedule() {
-        return new ArrayList<>();
+        List<String> result = new ArrayList<>();
+
+        for (Task t : tasks) {
+            if (isCircularDep(t.getId())) {
+                result.add("IMPOSSIBLE");
+                return result;
+            }
+
+            if (t.getDependencies().isEmpty()) continue;
+
+            int depStart = t.getDependencies().stream().map(id -> tasks.get(id - 1).getStart()).max(Integer::compareTo).get();
+            int depEnd = t.getDependencies().stream().map(id -> tasks.get(id - 1).getEnd()).min(Integer::compareTo).get();
+
+            int start = Math.max(depStart, t.getStart());
+            int end = Math.min(depEnd, t.getEnd());
+
+            if (end <= start) {
+                result.add("IMPOSSIBLE");
+                return result;
+            }
+
+            t.setStart(start);
+            t.setEnd(end);
+        }
+
+        for (Task t : tasks) {
+            String line = t.getStart() + " " + t.getEnd();
+            result.add(line);
+        }
+
+        return result;
     }
 }
