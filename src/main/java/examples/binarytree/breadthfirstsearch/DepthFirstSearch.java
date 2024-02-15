@@ -1,6 +1,5 @@
 package examples.binarytree.breadthfirstsearch;
 
-import examples.binarytree.BinaryTree;
 import java.util.Stack;
 
 public class DepthFirstSearch implements BinaryTreeSearch {

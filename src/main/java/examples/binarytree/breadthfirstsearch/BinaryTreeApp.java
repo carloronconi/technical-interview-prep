@@ -1,8 +1,4 @@
-package examples.binarytree;
-
-import examples.binarytree.breadthfirstsearch.BinaryTreeSearch;
-import examples.binarytree.breadthfirstsearch.BreadthFirstSearch;
-import examples.binarytree.breadthfirstsearch.DepthFirstSearch;
+package examples.binarytree.breadthfirstsearch;
 
 public class BinaryTreeApp {
     public static void main(String[] args) {

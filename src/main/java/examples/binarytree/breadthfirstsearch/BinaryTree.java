@@ -1,4 +1,4 @@
-package examples.binarytree;
+package examples.binarytree.breadthfirstsearch;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

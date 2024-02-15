@@ -1,6 +1,5 @@
 package examples.binarytree.breadthfirstsearch;
 
-import examples.binarytree.BinaryTree;
 import java.util.LinkedList;
 import java.util.Queue;
 
