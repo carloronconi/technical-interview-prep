@@ -25,6 +25,13 @@ public class BinaryTree<T> {
         return Optional.ofNullable(right);
     }
 
+    public int computeSize() {
+        int leftSize = getLeft().map(BinaryTree::computeSize).orElse(0);
+        int rightSize = getRight().map(BinaryTree::computeSize).orElse(0);
+
+        return 1 + leftSize + rightSize;
+    }
+
     @Override
     public String toString() {
         return value.toString();
