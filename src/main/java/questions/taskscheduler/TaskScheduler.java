@@ -1,4 +1,4 @@
-package interviews.taskscheduler;
+package questions.taskscheduler;
 
 import java.util.ArrayList;
 import java.util.List;

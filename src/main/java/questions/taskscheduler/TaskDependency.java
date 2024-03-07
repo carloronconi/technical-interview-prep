@@ -1,4 +1,4 @@
-package interviews.taskscheduler;
+package questions.taskscheduler;
 
 /**
  * dependency in the form A -> B ("A" depends on "B"

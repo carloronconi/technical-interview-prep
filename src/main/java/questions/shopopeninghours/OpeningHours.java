@@ -1,4 +1,4 @@
-package interviews.shopopeninghours;
+package questions.shopopeninghours;
 
 import java.util.ArrayList;
 import java.util.List;

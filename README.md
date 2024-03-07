@@ -1,2 +1,2 @@
 # Technical interview prep
-Collection of [useful examples](./src/main/java/examples) and [actual interview questions](./src/main/java/interviews) I encountered. Each package is a standalone example/question documented with either a `README.md` or javadoc. Each example/question can be run either by itself or by running its tests.
+Collection of [useful examples](./src/main/java/examples) and [actual interview questions](./src/main/java/questions) I encountered. Each package is a standalone example/question documented with either a `README.md` or javadoc. Each example/question can be run either by itself or by running its tests.

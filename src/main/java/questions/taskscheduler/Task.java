@@ -1,4 +1,4 @@
-package interviews.taskscheduler;
+package questions.taskscheduler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

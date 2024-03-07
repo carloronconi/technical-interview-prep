@@ -1,4 +1,4 @@
-package interviews.towercontest;
+package questions.towercontest;
 
 import junit.framework.TestCase;
 

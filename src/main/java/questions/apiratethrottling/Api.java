@@ -1,4 +1,4 @@
-package interviews.apiratethrottling;
+package questions.apiratethrottling;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

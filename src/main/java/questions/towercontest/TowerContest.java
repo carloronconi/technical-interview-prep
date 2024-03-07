@@ -1,4 +1,4 @@
-package interviews.towercontest;
+package questions.towercontest;
 
 import java.util.*;
 import java.util.stream.Collectors;
